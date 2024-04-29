@@ -20,8 +20,13 @@ import org.junit.Test;
 public abstract class GraphInstanceTest {
     
     // Testing strategy
-    //   TODO
-    
+    //  TODO
+    // test strategy for each operation of Graph
+    // add():
+    // add vertex string = exists, not exists
+    // existing vertex number = 0, 1, n
+    // set():
+    //
     /**
      * Overridden by implementation-specific test classes.
      * 
@@ -41,6 +46,23 @@ public abstract class GraphInstanceTest {
                 Collections.emptySet(), emptyInstance().vertices());
     }
     
-    // TODO other tests for instance methods of Graph
     
+    @Test
+    public void testAddVertex()
+    {
+        Graph<String> g = emptyInstance();
+        
+        assertEquals("expected new graph to have no vertices",
+                Collections.emptySet(), emptyInstance().vertices());
+        
+        assertTrue("expected add new Vertex Num1 succeed", g.add("Num1"));
+        
+        assertTrue("expected add new Vertex Num2 succeed", g.add("Num2"));
+        
+        assertFalse("expected add new Vertex Num1 fail", g.add("Num1"));
+    }
+    
+    
+    
+    // TODO other tests for instance methods of Graph
 }
