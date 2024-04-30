@@ -35,7 +35,7 @@ public abstract class GraphInstanceTest {
     // weight = 0, not zero
     // 
     // remove():
-    // vertex that be removed is not exist or exits(no edge attach) or exist(have edge attach)
+    // vertex that be removed is not exist or exits(no edge attach) or exist(have edge to) or exist(have edge from)
     // 
     // vertices():
     // no vertex is in graph, have vertex is in graph
@@ -198,6 +198,105 @@ public abstract class GraphInstanceTest {
         
     }
     
+    @Test
+    public void testRemoveVertex()
+    {
+        Graph<String> g = emptyInstance();
+        
+        //case 1 remove vertex which is not exist
+        
+        assertFalse("expected false when remove vertex which is not in graph", g.remove("Num1"));
+        
+        //case 2 remove vertex which is exist but no edge attach
+        
+        g.add("Num1");
+        
+        assertTrue("expected true when remove vertex which is in graph", g.remove("Num1"));
+        
+        //case 3 remove vertex which is exist and only have edge to other vertex
+        
+        g.set("Num1", "Num2", 1);
+        
+        Map<String, Integer> mp1 = g.targets("Num1");
+        
+        assertEquals("expected Num1 have one edge weighted 1 and target is Num2", Integer.valueOf(1), mp1.get("Num2"));
+        
+        Map<String, Integer> mp2 = g.sources("Num1");
+        
+        assertEquals("expected the size of set which is the source set which target is Num1 is zero", 0, mp2.size());
+        
+        g.remove("Num1");
+        
+        Set<String> st1 = g.vertices();
+        
+        assertEquals("expected vertex set size is 1 after remove Num1", 1, st1.size());
+        
+        assertTrue("expected Num2 is in st", st1.contains("Num2"));
+        
+        assertEquals("expected source set size of Num2 is zero", 0, g.sources("Num2").size());
+        assertEquals("expected target set size of Num2 is zero", 0, g.targets("Num2").size());
+        
+        //case 4 remove vertex which is exist and only have edge from vertex
+        
+        g.set("Num1", "Num2", 1);
+        
+        Map<String, Integer> mp3 = g.sources("Num2");
+        
+        assertEquals("expected Num2 have one edge weighted 1 and source is Num1", Integer.valueOf(1), mp3.get("Num1"));
+        
+        Map<String, Integer> mp4 = g.targets("Num2");
+        
+        assertEquals("expected the size of set which is the target set which source is Num2 is zero", 0, mp4.size());
+        
+        g.remove("Num2");
+        
+        Set<String> st2 = g.vertices();
+        
+        assertEquals("expected vertex set size is 1 after remove Num2", 1, st2.size());
+        
+        assertTrue("expected Num1 is in st", st1.contains("Num1"));
+        
+        assertEquals("expected source set size of Num1 is zero", 0, g.sources("Num1").size());
+        assertEquals("expected target set size of Num1 is zero", 0, g.targets("Num1").size());
+        
+        // case 5 remove vertex which is exist and have edge from and to vertex
+        
+        g.set("Num1", "Num2", 1);
+        g.set("Num2", "Num3", 2);
+        
+        Map<String, Integer> mp5 = g.sources("Num2");
+        assertEquals("expected set which is source set when target is Num2 size is 1", 1, mp5.size());
+        assertEquals("expected Num2 have one edge weighted 1 and source is Num1", Integer.valueOf(1), mp5.get("Num1"));
+        
+        Map<String, Integer> mp6 = g.targets("Num2");
+        assertEquals("expected set which is target set when source is Num2 size is 1", 1, mp6.size());
+        assertEquals("expected Num2 have one edge weighted 2 and target is Num3", Integer.valueOf(2), mp6.get("Num3"));
+
+        Map<String, Integer> mp7 = g.targets("Num1");
+        assertEquals("expected set which is target set when source is Num1 size is 1", 1, mp7.size());
+        assertEquals("expected Num1 have one edge weighted 1 and target is Num2", Integer.valueOf(1), mp7.get("Num2"));
+        
+        Map<String, Integer> mp8 = g.sources("Num3");
+        assertEquals("expected set which is source set when target is Num3 size is 1", 1, mp8.size());
+        assertEquals("expected Num3 have one edge weighted 2 and source is Num2", Integer.valueOf(2), mp8.get("Num2"));
+                
+        // try to remove and test
+        
+        g.remove("Num2");
+        
+        Set<String> st3 = g.vertices();
+        
+        assertEquals("expected vertex set size is 2 after remove Num2", 1, st3.size());
+        assertTrue("expected Num1 is in st3", st3.contains("Num1"));
+        assertTrue("expected Num3 is in st3", st3.contains("Num3"));
+        
+        Map<String, Integer> mp9 = g.targets("Num1");
+        assertEquals("expected set which is target set when source is Num1 size is 0", 0, mp9.size());
+        
+        Map<String, Integer> mp10 = g.sources("Num3");
+        assertEquals("expected set which is source set when target is Num3 size is 0", 0, mp10.size());
+        
+    }
     
     // TODO other tests for instance methods of Graph
 }
