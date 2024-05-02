@@ -15,9 +15,9 @@ import java.util.HashSet;
  * 
  * <p>PS2 instructions: you MUST use the provided rep.
  */
-public class ConcreteVerticesGraph implements Graph<String> {
+public class ConcreteVerticesGraph<L> implements Graph<L> {
     
-    private final List<Vertex> vertices = new ArrayList<>();
+    private final List<Vertex<L>> vertices = new ArrayList<>();
     
     // Abstraction function:
     // represent a graph and all vertex is in vertices and all edge also in vertices
@@ -39,16 +39,16 @@ public class ConcreteVerticesGraph implements Graph<String> {
     {
         assert vertices != null;
         
-        List<String> vertices_lable_vertex = new ArrayList<>();
-        List<String> vertices_lable_vertex_target = new ArrayList<>();
+        List<L> vertices_lable_vertex = new ArrayList<>();
+        List<L> vertices_lable_vertex_target = new ArrayList<>();
         
-        for(Vertex v : vertices)
+        for(Vertex<L> v : vertices)
         {
             vertices_lable_vertex.add(v.getVertex());
             vertices_lable_vertex_target.addAll(v.getEdge().keySet());
         }
         
-        for(String s : vertices_lable_vertex_target)
+        for(L s : vertices_lable_vertex_target)
         {
             assert vertices_lable_vertex.contains(s);
         }
@@ -62,12 +62,12 @@ public class ConcreteVerticesGraph implements Graph<String> {
         }
     }
     
-    @Override public boolean add(String vertex) {
+    @Override public boolean add(L vertex) {
         //throw new RuntimeException("not implemented");
         
         int exist_flag = 0;
         
-        for(Vertex v : vertices)
+        for(Vertex<L> v : vertices)
         {
             if(v.getVertex().equals(vertex))
             {
@@ -79,7 +79,7 @@ public class ConcreteVerticesGraph implements Graph<String> {
         if(exist_flag == 1)
                 return false;
         
-        Vertex v = new Vertex(vertex);
+        Vertex<L> v = new Vertex<L>(vertex);
         
         vertices.add(v);
         
@@ -89,16 +89,16 @@ public class ConcreteVerticesGraph implements Graph<String> {
         
     }
     
-    @Override public int set(String source, String target, int weight) {
+    @Override public int set(L source, L target, int weight) {
         //throw new RuntimeException("not implemented");
         
         int exist_flag_source = 0;
         int exist_flag_target = 0;
         
-        Vertex exist_vertex_source = null;
-        Vertex exist_vertex_target = null;
+        Vertex<L> exist_vertex_source = null;
+        Vertex<L> exist_vertex_target = null;
         
-        for(Vertex v : vertices)
+        for(Vertex<L> v : vertices)
         {
             if(v.getVertex().equals(source))
             {
@@ -119,7 +119,7 @@ public class ConcreteVerticesGraph implements Graph<String> {
         {
             if(weight > 0)
             {
-                Vertex v = new Vertex(source);
+                Vertex<L> v = new Vertex<L>(source);
                 
                 v.add_edge(target, weight);
                 
@@ -127,7 +127,7 @@ public class ConcreteVerticesGraph implements Graph<String> {
                 
                 if(exist_flag_target == 0)
                 {
-                    Vertex e = new Vertex(target);
+                    Vertex<L> e = new Vertex<L>(target);
                     
                     vertices.add(e);
                 }
@@ -145,13 +145,13 @@ public class ConcreteVerticesGraph implements Graph<String> {
         }
         else
         {
-            Map<String, Integer> edges = exist_vertex_source.getEdge();
+            Map<L, Integer> edges = exist_vertex_source.getEdge();
             
             int edge_exist_flag = 0;
             
             int edge_exist_weight = -1;
             
-            for(Map.Entry<String, Integer> entry : edges.entrySet())
+            for(Map.Entry<L, Integer> entry : edges.entrySet())
             {
                 if(entry.getKey().equals(target))
                 {
@@ -167,7 +167,7 @@ public class ConcreteVerticesGraph implements Graph<String> {
             {
                 if(exist_flag_target == 0)
                 {
-                    Vertex e = new Vertex(target);
+                    Vertex<L> e = new Vertex<L>(target);
                     
                     vertices.add(e);
                 }  
@@ -209,14 +209,14 @@ public class ConcreteVerticesGraph implements Graph<String> {
         return -1;
     }
     
-    @Override public boolean remove(String vertex) {
+    @Override public boolean remove(L vertex) {
         //throw new RuntimeException("not implemented");
         
         int exist_flag = 0;
         
-        Vertex exist_vertex = null;
+        Vertex<L> exist_vertex = null;
         
-        for(Vertex v : vertices)
+        for(Vertex<L> v : vertices)
         {
             if(v.getVertex().equals(vertex))
             {
@@ -236,7 +236,7 @@ public class ConcreteVerticesGraph implements Graph<String> {
         {
             vertices.remove(exist_vertex);
             
-            for(Vertex v : vertices)
+            for(Vertex<L> v : vertices)
             {
                 v.remove_edge(vertex);
             }
@@ -248,12 +248,12 @@ public class ConcreteVerticesGraph implements Graph<String> {
         
     }
     
-    @Override public Set<String> vertices() {
+    @Override public Set<L> vertices() {
         //throw new RuntimeException("not implemented");
         
-        Set<String> return_vertex = new HashSet<>();
+        Set<L> return_vertex = new HashSet<>();
         
-        for(Vertex v : vertices)
+        for(Vertex<L> v : vertices)
         {
             return_vertex.add(v.getVertex());
         }
@@ -263,12 +263,12 @@ public class ConcreteVerticesGraph implements Graph<String> {
         return return_vertex;
     }
     
-    @Override public Map<String, Integer> sources(String target) {
+    @Override public Map<L, Integer> sources(L target) {
         //throw new RuntimeException("not implemented");
         
-        Map<String, Integer> return_source = new HashMap<>();
+        Map<L, Integer> return_source = new HashMap<>();
         
-        for(Vertex v : vertices)
+        for(Vertex<L> v : vertices)
         {
             if(v.getEdge().keySet().contains(target))
             {
@@ -282,12 +282,12 @@ public class ConcreteVerticesGraph implements Graph<String> {
         
     }
     
-    @Override public Map<String, Integer> targets(String source) {
+    @Override public Map<L, Integer> targets(L source) {
         //throw new RuntimeException("not implemented");
         
-        Map<String, Integer> return_target = null;
+        Map<L, Integer> return_target = null;
         
-        for(Vertex v : vertices)
+        for(Vertex<L> v : vertices)
         {
             if(v.getVertex().equals(source))
             {
@@ -314,11 +314,11 @@ public class ConcreteVerticesGraph implements Graph<String> {
  * <p>PS2 instructions: the specification and implementation of this class is
  * up to you.
  */
-class Vertex {
+class Vertex<L> {
     
     // fields
-    private final String vertex;
-    private final Map<String, Integer> edges = new HashMap<>();
+    private final L vertex;
+    private final Map<L, Integer> edges = new HashMap<>();
     
     // Abstraction function:
     // represent a vertex include all edges from this vertex
@@ -331,7 +331,7 @@ class Vertex {
      * create vertex with empty edge set(which source is this vertex)
      * @param vertex vertex label
      */
-    public Vertex(String vertex)
+    public Vertex(L vertex)
     {
         this.vertex = vertex;
         
@@ -344,7 +344,7 @@ class Vertex {
     private void checkRep()
     {
         assert vertex != null;
-        for(Map.Entry<String, Integer> entry : edges.entrySet())
+        for(Map.Entry<L, Integer> entry : edges.entrySet())
         {
             assert entry.getKey() != null;
             assert entry.getValue() > 0;
@@ -360,7 +360,7 @@ class Vertex {
      * @param target new edge's target (require target is not in this vertex's edge set)
      * @param weight new edge's weight (require weight is bigger than zero)
      */
-    public void add_edge(String target, Integer weight)
+    public void add_edge(L target, Integer weight)
     {
         edges.put(target, weight);
         
@@ -373,7 +373,7 @@ class Vertex {
      * @param target the target of edge need to be set(require in this vertex's edge set)
      * @param weight the weight of edge need to be set(require weight is bigger than zero)
      */
-    public void set_edge(String target, Integer weight)
+    public void set_edge(L target, Integer weight)
     {
         edges.replace(target, weight);
         
@@ -384,7 +384,7 @@ class Vertex {
      * remove edge from this vertex which target is special vertex 
      * @param vertex the target of edge need to be remove(require vertex is in this vertex edge set)
      */
-    public void remove_edge(String vertex)
+    public void remove_edge(L vertex)
     {
         edges.remove(vertex);
         
@@ -396,7 +396,7 @@ class Vertex {
      * get this vertex label
      * @return return this vertex label
      */
-    public String getVertex()
+    public L getVertex()
     {
         return vertex;
     }
@@ -405,11 +405,11 @@ class Vertex {
      * get the edge set of this vertex
      * @return edge map with key is String which represent target and value is Integer which represent weight
      */
-    public Map<String, Integer> getEdge()
+    public Map<L, Integer> getEdge()
     {
-        Map<String, Integer> return_edges = new HashMap<>();
+        Map<L, Integer> return_edges = new HashMap<>();
         
-        for(Map.Entry<String, Integer> entry : edges.entrySet())
+        for(Map.Entry<L, Integer> entry : edges.entrySet())
         {
             return_edges.put(entry.getKey(), entry.getValue());
         }
