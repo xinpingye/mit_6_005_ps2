@@ -58,7 +58,7 @@ public class ConcreteEdgesGraph implements Graph<String> {
     
     @Override public boolean add(String vertex) {
         //throw new RuntimeException("not implemented");
-        if(vertices.contains("vertex"))
+        if(vertices.contains(vertex))
         {
             checkRep();
             

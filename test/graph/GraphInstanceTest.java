@@ -124,13 +124,13 @@ public abstract class GraphInstanceTest {
         
         Set<String> st2 = g.vertices();
         
-        assertEquals("expected st2 size is 3", st2.size());
+        assertEquals("expected st2 size is 3", 3, st2.size());
         
-        assertTrue("expected Num1 is in st", st1.contains("Num1"));
+        assertTrue("expected Num1 is in st", st2.contains("Num1"));
         
-        assertTrue("expected Num2 is in st", st1.contains("Num2"));
+        assertTrue("expected Num2 is in st", st2.contains("Num2"));
         
-        assertTrue("expected Num3 is in st", st1.contains("Num3"));
+        assertTrue("expected Num3 is in st", st2.contains("Num3"));
         
         Map<String, Integer> mp3 = g.sources("Num2");
         
@@ -254,7 +254,7 @@ public abstract class GraphInstanceTest {
         
         assertEquals("expected vertex set size is 1 after remove Num2", 1, st2.size());
         
-        assertTrue("expected Num1 is in st", st1.contains("Num1"));
+        assertTrue("expected Num1 is in st", st2.contains("Num1"));
         
         assertEquals("expected source set size of Num1 is zero", 0, g.sources("Num1").size());
         assertEquals("expected target set size of Num1 is zero", 0, g.targets("Num1").size());
@@ -286,7 +286,7 @@ public abstract class GraphInstanceTest {
         
         Set<String> st3 = g.vertices();
         
-        assertEquals("expected vertex set size is 2 after remove Num2", 1, st3.size());
+        assertEquals("expected vertex set size is 2 after remove Num2", 2, st3.size());
         assertTrue("expected Num1 is in st3", st3.contains("Num1"));
         assertTrue("expected Num3 is in st3", st3.contains("Num3"));
         
