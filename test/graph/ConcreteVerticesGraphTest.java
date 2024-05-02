@@ -22,7 +22,8 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
      * Provide a ConcreteVerticesGraph for tests in GraphInstanceTest.
      */
     @Override public Graph<String> emptyInstance() {
-        return new ConcreteVerticesGraph();
+        ConcreteVerticesGraph<String> g = new ConcreteVerticesGraph<String>();
+        return g;
     }
     
     /*
@@ -57,7 +58,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     @Test
     public void testVertex()
     {
-        Vertex v = new Vertex("Num1");
+        Vertex<String> v = new Vertex<String>("Num1");
         
         assertEquals("expect vertex is Num1", "Num1", v.getVertex());
     }
@@ -65,7 +66,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     @Test
     public void testAddAndSetAndRemove()
     {
-        Vertex v = new Vertex("Num1");
+        Vertex<String> v = new Vertex<String>("Num1");
         v.add_edge("Num2", Integer.valueOf(1));
         
         Map<String, Integer> mp1 = v.getEdge();

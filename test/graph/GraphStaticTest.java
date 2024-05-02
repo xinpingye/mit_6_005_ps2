@@ -29,8 +29,16 @@ public class GraphStaticTest {
     
     @Test
     public void testEmptyVerticesEmpty() {
+        
+        Graph<String> g1 = Graph.empty();
+        
+        Graph<Integer> g2 = Graph.empty();
+        
         assertEquals("expected empty() graph to have no vertices",
-                Collections.emptySet(), Graph.empty().vertices());
+                Collections.emptySet(), g1.vertices());
+        
+        assertEquals("expected empty() graph to have no vertices",
+                Collections.emptySet(), g2.vertices());
     }
     
     // TODO test other vertex label types in Problem 3.2

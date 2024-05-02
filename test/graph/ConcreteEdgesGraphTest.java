@@ -23,7 +23,8 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
      * Provide a ConcreteEdgesGraph for tests in GraphInstanceTest.
      */
     @Override public Graph<String> emptyInstance() {
-        return new ConcreteEdgesGraph();
+        ConcreteEdgesGraph<String> g = new ConcreteEdgesGraph<String>();
+        return g;
     }
     
     /*
@@ -57,7 +58,7 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
     @Test
     public void testEdge()
     {
-        Edge e = new Edge("Num1", "Num2", Integer.valueOf(1));
+        Edge<String> e = new Edge<String>("Num1", "Num2", Integer.valueOf(1));
         
         assertEquals("expected source is Num1", "Num1", e.getSource());
         assertEquals("expected target is Num2", "Num2", e.getTarget());
@@ -65,9 +66,9 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
         
         assertEquals("expected correct toString output", "Num1-1->Num2", e.toString());
         
-        Edge e1 = new Edge("Num1", "Num3", Integer.valueOf(1));
+        Edge<String> e1 = new Edge<String>("Num1", "Num3", Integer.valueOf(1));
         
-        Edge e2 = new Edge("Num1", "Num3", Integer.valueOf(1));
+        Edge<String> e2 = new Edge<String>("Num1", "Num3", Integer.valueOf(1));
         
         assertFalse("expect e not same with e1", Edge.compare(e, e1));
         assertTrue("expect e1 is same with e2", Edge.compare(e1, e2));
