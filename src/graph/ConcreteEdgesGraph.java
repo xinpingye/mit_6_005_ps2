@@ -321,7 +321,7 @@ class Edge<L> {
      * @param e2
      * @return if e1 equal with e2 , return true, else return false
      */
-    public static boolean compare(Edge e1, Edge e2)
+    public static <L> boolean compare(Edge<L> e1, Edge<L> e2)
     {
         return (e1.getSource() == e2.getSource() && e1.getTarget() ==e2.getTarget());
     }
